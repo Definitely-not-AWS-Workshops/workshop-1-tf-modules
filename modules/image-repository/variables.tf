@@ -1,0 +1,11 @@
+variable "environment" {
+  description = "The environment to which the repository delploys"
+  type        = string
+}
+
+variable "project_name" {
+  description = "The name of the project"
+  type        = string
+}
+
+
