@@ -1,7 +1,7 @@
 module "vpc" {
   source = "./vpc"
 
-  name        = var.project_name
+  name        = local.resource_name
   environment = var.environment
 
   vpc_cidr = var.vpc_cidr

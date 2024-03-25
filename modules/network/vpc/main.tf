@@ -16,6 +16,10 @@ resource "aws_vpc" "main" {
 #----------------------------------------------------------------------
 resource "aws_internet_gateway" "main" {
   count = local.has_public_subnet ? 1 : 0
+
+  tags = {
+    Name = var.name
+  }
 }
 
 resource "aws_internet_gateway_attachment" "main" {
@@ -66,7 +70,7 @@ resource "aws_route_table" "public" {
   vpc_id = aws_vpc.main.id
 
   tags = {
-    Name = "public-rtb"
+    Name = "${var.name}-public"
   }
 }
 
@@ -87,6 +91,10 @@ resource "aws_route_table_association" "public" {
 resource "aws_route_table" "private" {
   count  = length(var.private_subnets) / length(var.azs)
   vpc_id = aws_vpc.main.id
+
+  tags = {
+    Name = "${var.name}-private"
+  }
 }
 
 resource "aws_route_table_association" "private" {
