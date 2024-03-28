@@ -16,7 +16,7 @@ module "cloudfront" {
 
   bucket_regional_domain_name = module.s3_web.bucket_regional_domain_name
   domain_name                 = var.domain_name
-  alb_domain_name = var.alb_domain_name
+  alb_domain_name             = var.alb_domain_name
   hosted_zone_id              = var.hosted_zone_id
   certificate_arn             = module.certificate.arn
 }
@@ -31,6 +31,7 @@ module "s3_web" {
   cloudfront_arn           = module.cloudfront.arn
   enable_bucket_versioning = var.enable_bucket_versioning
   mfa_code                 = var.mfa_code
+  force_destroy            = var.s3_bucket_force_destroy
 }
 
 #----------------------------------------------------------------------

@@ -1,5 +1,6 @@
 resource "aws_s3_bucket" "main" {
-  bucket = var.bucket_name
+  bucket        = var.bucket_name
+  force_destroy = var.force_destroy
 }
 
 resource "aws_s3_bucket_policy" "allow_cloudfront" {

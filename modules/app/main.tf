@@ -24,10 +24,13 @@ module "alb" {
   certificate_arn = module.certificate.arn
 }
 
-resource "aws_vpc_security_group_ingress_rule" "allow_all_to_alb" {
+resource "aws_vpc_security_group_ingress_rule" "allow_cloudfront" {
   security_group_id = module.alb.security_group_id
-  cidr_ipv4         = local.all_ips
-  ip_protocol       = local.any_protocol
+
+  prefix_list_id = data.aws_ec2_managed_prefix_list.cloudfront.id
+  ip_protocol    = "tcp"
+  from_port      = 443
+  to_port        = 443
 }
 
 resource "aws_vpc_security_group_egress_rule" "allow_all_from_alb" {
@@ -105,7 +108,7 @@ module "gha_role" {
 
 resource "aws_iam_policy" "allow_deploy_app" {
   name        = "AllowDeployApp"
-  description = "IAM policy for pushing Docker image to ECR"
+  description = "IAM policy for deploying app to fargate"
 
   policy = templatefile("${path.module}/allow-deploy-app-policy.tpl", {
     ecs_execution_role_arn = data.aws_iam_role.ecs_task_execution.arn,

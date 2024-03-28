@@ -21,3 +21,9 @@ variable "mfa_code" {
   default     = ""
 }
 
+variable "force_destroy" {
+  description = "If true, remove all items in the bucket and then remove the bucket"
+  type        = bool
+  default     = false
+}
+

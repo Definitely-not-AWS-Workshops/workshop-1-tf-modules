@@ -8,4 +8,10 @@ variable "project_name" {
   type        = string
 }
 
+variable "force_delete" {
+  description = "If true,  delete the repository even if it contains images"
+  type        = bool
+  default     = false
+}
+
 
